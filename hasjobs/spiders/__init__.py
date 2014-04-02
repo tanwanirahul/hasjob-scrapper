@@ -33,25 +33,25 @@ class HasGeekSpider(CrawlSpider):
             Parses the job information.
         '''
         sel = Selector(response)
-        first = 0
         job = Job()
         job["source"] = response.url
 
-        job["title"] = sel.xpath(XPATHS["title"]).extract()[first]
+        job["title"] = sel.xpath(XPATHS["title"]).extract()
 
-        job["postedDate"] = sel.xpath(XPATHS["postedDate"]).extract()[first]
+        job["postedDate"] = sel.xpath(XPATHS["postedDate"]).extract()
 
-        job["location"] = sel.xpath(XPATHS["location"]).extract()[first]
+        job["location"] = sel.xpath(XPATHS["location"]).extract()
 
-        job["companyName"] = sel.xpath(XPATHS["companyName"]).extract()[first]
-        job["companyURL"] = sel.xpath(XPATHS["companyURL"]).extract()[first]
-        job["companyDetails"] = sel.xpath(XPATHS["companyDescription"]).extract()[first]
-        job["companyLogo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract()[first])
+        job["companyName"] = sel.xpath(XPATHS["companyName"]).extract()
+        job["companyURL"] = sel.xpath(XPATHS["companyURL"]).extract()
+        job["companyDetails"] = sel.xpath(XPATHS["companyDescription"]).extract()
+        job["companyLogo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract())
 
-        job["description"] = sel.xpath(XPATHS["description"]).extract()[first]
+        job["description"] = sel.xpath(XPATHS["description"]).extract()
 
         job["jobPerks"] = sel.xpath(XPATHS["jobPerks"]).extract()
 
+        job = self.transform(job)
         return job
 
     def transform_company_logo(self, relative_img_uri):
@@ -59,3 +59,22 @@ class HasGeekSpider(CrawlSpider):
             Given the relative image URI, constructs the fully qualified URL for hasgeek.
         '''
         return "https://hasjob.co%s" %(relative_img_uri)
+
+    def transform(self, job):
+        '''
+            Transforms the Job instance to convert all lists into a simple string.
+        '''
+        fields_to_ignore = ["jobPerks"]
+        first = 0
+
+        for key, value in job.items():
+
+            if key in fields_to_ignore:
+                continue
+
+            if isinstance(value, list):
+                if value:
+                    job[key] = value[first]
+                else:
+                    job[key] = ""
+        return job
