@@ -15,7 +15,7 @@ XPATHS = {
             "companyURL": "//span[@class='post-company-url']/a/text()",
             "companyDescription": "//span[@class='post-company-name']/text()",
             "companyLogo": "//img[@class='post-company-logo']/@src",
-            "description": "//span[@class='post-company-name']/text()",
+            "description": "//div[@id='detailed-info']",
             "jobPerks" : "//div[@id='detailed-info']/ul[last()]/li/text()"
           }
 
