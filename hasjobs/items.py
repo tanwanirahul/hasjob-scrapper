@@ -5,12 +5,10 @@
 
 from scrapy.item import Item, Field
 
-class HasjobsItem(Item):
-    # define the fields for your item here like:
-    # name = Field()
-    pass
-
 class Job(Item):
+    '''
+        Represent a Job object from Hasjob board.
+    '''
     source = Field()
     title = Field()
     company = Field()
@@ -18,4 +16,3 @@ class Job(Item):
     location = Field()
     postedDate = Field()
     jobPerks = Field()
-    experience = Field()
