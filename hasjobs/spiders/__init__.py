@@ -58,7 +58,8 @@ class HasGeekSpider(CrawlSpider):
         '''
             Given the relative image URI, constructs the fully qualified URL for hasgeek.
         '''
-        return "https://hasjob.co%s" %(relative_img_uri)
+        data = self.transform({"logo": relative_img_uri})
+        return "https://hasjob.co%s" %(data["logo"])
 
     def transform(self, job):
         '''
