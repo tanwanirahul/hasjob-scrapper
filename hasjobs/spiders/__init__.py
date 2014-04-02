@@ -25,7 +25,7 @@ class HasGeekSpider(CrawlSpider):
     '''
     name = "hasjob"
     allowed_domains = ["hasjob.co"]
-    start_urls = ["hasjob.co"]
+    start_urls = ["http://hasjob.co"]
     rules = [Rule(SgmlLinkExtractor(allow=['/view/\w+']), 'parse_job')]
 
     def parse_job(self, response):
@@ -36,18 +36,18 @@ class HasGeekSpider(CrawlSpider):
         job = Job()
         job["source"] = response.url
 
-        job["title"] = sel.xpath(XPATHS["title"]).extract()
+        job["title"] = sel.xpath(XPATHS["title"]).extract()[0]
 
-        job["postedDate"] = sel.xpath(XPATHS["postedDate"]).extract()
+        job["postedDate"] = sel.xpath(XPATHS["postedDate"]).extract()[0]
 
-        job["location"] = sel.xpath(XPATHS["location"]).extract()
+        job["location"] = sel.xpath(XPATHS["location"]).extract()[0]
 
-        job["company"]["name"] = sel.xpath(XPATHS["companyName"]).extract()
-        job["company"]["url"] = sel.xpath(XPATHS["companyURL"]).extract()
-        job["company"]["about"] = sel.xpath(XPATHS["companyDescription"]).extract()
-        job["company"]["logo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract())
+#        job["company"]["name"] = sel.xpath(XPATHS["companyName"]).extract()
+#        job["company"]["url"] = sel.xpath(XPATHS["companyURL"]).extract()
+#        job["company"]["about"] = sel.xpath(XPATHS["companyDescription"]).extract()
+#        job["company"]["logo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract())
 
-        job["description"] = sel.xpath(XPATHS["description"]).extract()
+        job["description"] = sel.xpath(XPATHS["description"]).extract()[0]
 
         job["jobPerks"] = sel.xpath(XPATHS["jobPerks"]).extract()
 
