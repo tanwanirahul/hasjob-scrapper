@@ -33,21 +33,22 @@ class HasGeekSpider(CrawlSpider):
             Parses the job information.
         '''
         sel = Selector(response)
+        first = 0
         job = Job()
         job["source"] = response.url
 
-        job["title"] = sel.xpath(XPATHS["title"]).extract()[0]
+        job["title"] = sel.xpath(XPATHS["title"]).extract()[first]
 
-        job["postedDate"] = sel.xpath(XPATHS["postedDate"]).extract()[0]
+        job["postedDate"] = sel.xpath(XPATHS["postedDate"]).extract()[first]
 
-        job["location"] = sel.xpath(XPATHS["location"]).extract()[0]
+        job["location"] = sel.xpath(XPATHS["location"]).extract()[first]
 
-        job["companyName"] = sel.xpath(XPATHS["companyName"]).extract()
-        job["companyURL"] = sel.xpath(XPATHS["companyURL"]).extract()
-        job["companyDetails"] = sel.xpath(XPATHS["companyDescription"]).extract()
-        job["companyLogo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract())
+        job["companyName"] = sel.xpath(XPATHS["companyName"]).extract()[first]
+        job["companyURL"] = sel.xpath(XPATHS["companyURL"]).extract()[first]
+        job["companyDetails"] = sel.xpath(XPATHS["companyDescription"]).extract()[first]
+        job["companyLogo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract()[first])
 
-        job["description"] = sel.xpath(XPATHS["description"]).extract()[0]
+        job["description"] = sel.xpath(XPATHS["description"]).extract()[first]
 
         job["jobPerks"] = sel.xpath(XPATHS["jobPerks"]).extract()
 
