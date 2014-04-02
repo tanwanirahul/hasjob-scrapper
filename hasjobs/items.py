@@ -11,7 +11,10 @@ class Job(Item):
     '''
     source = Field()
     title = Field()
-    company = Field()
+    companyName = Field()
+    companyURL = Field()
+    companyLogo = Field()
+    companyDetails = Field()
     description = Field()
     location = Field()
     postedDate = Field()
