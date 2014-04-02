@@ -42,10 +42,10 @@ class HasGeekSpider(CrawlSpider):
 
         job["location"] = sel.xpath(XPATHS["location"]).extract()[0]
 
-#        job["company"]["name"] = sel.xpath(XPATHS["companyName"]).extract()
-#        job["company"]["url"] = sel.xpath(XPATHS["companyURL"]).extract()
-#        job["company"]["about"] = sel.xpath(XPATHS["companyDescription"]).extract()
-#        job["company"]["logo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract())
+        job["company"]["name"] = sel.xpath(XPATHS["companyName"]).extract()
+        job["company"]["url"] = sel.xpath(XPATHS["companyURL"]).extract()
+        job["company"]["about"] = sel.xpath(XPATHS["companyDescription"]).extract()
+        job["company"]["logo"] = self.transform_company_logo(sel.xpath(XPATHS["companyLogo"]).extract())
 
         job["description"] = sel.xpath(XPATHS["description"]).extract()[0]
 
